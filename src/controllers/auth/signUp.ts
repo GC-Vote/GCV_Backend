@@ -7,6 +7,7 @@ import httpStatus from "http-status";
 import { userService } from "services";
 import { encryptPassword, errorHandlerWrapper } from "@/utils";
 import { getUserFromEmail } from "@/services/user.service";
+import path from "path";
 
 export const signUpValidator = () => {
   return [
@@ -24,7 +25,7 @@ type ResBody = unknown;
 type ReqBody = {
   name: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   password: string;
 };
 type ReqQuery = unknown;
@@ -33,7 +34,8 @@ export const signUpHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { name, email, avatar, password } = req.body;
+  const { name, email, avatar, password } = req.body; 
+
   const user: UserEntity = await getUserFromEmail(email);
 
   if (user) {
@@ -45,7 +47,7 @@ export const signUpHandler = async (
   const newUser: UserEntity = await userService.createUser({
     name: name,
     email: email,
-    avatar: avatar,
+    avatar: avatar ? avatar : `${path.join(__dirname, '../../../','public/upload/img/default.png')}`,
     password: hashPassword,
   });
 
