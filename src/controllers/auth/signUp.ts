@@ -10,6 +10,8 @@ import { encryptPassword, errorHandlerWrapper } from "@/utils";
 import { getUserFromEmail } from "@/services/user.service";
 import path from "path";
 import { PATHS } from "consts";
+import { sendVerifyEmail } from "@/utils/email";
+import { randomInt } from "@/utils/generateRandomNumber";
 
 export const signUpValidator = () => {
   return [
@@ -25,10 +27,10 @@ export const signUpValidator = () => {
 type Params = unknown;
 type ResBody = unknown;
 type ReqBody = {
-  username: string;
-  email: string;
-  avatar?: string;
-  password: string;
+  username: string,
+  email: string,
+  avatar?: string,
+  password: string
 };
 type ReqQuery = unknown;
 
@@ -51,6 +53,9 @@ export const signUpHandler = async (
   // Hash password
   const hashPassword: string = await encryptPassword(password);
 
+  // Generate Random Number
+  const randomVerifyNumber = randomInt(100000, 999999);
+
   const newUser: UserEntity = await userService.createUser({
     username: purify.sanitize(username),
     email: email,
@@ -63,7 +68,11 @@ export const signUpHandler = async (
           "default.png"
         )}`,
     password: hashPassword,
+    verifyCode: randomVerifyNumber
   });
+
+  // Verify Email
+  sendVerifyEmail(email, randomVerifyNumber);
 
   res.status(httpStatus.OK).json(newUser);
 };

@@ -18,6 +18,9 @@ export class UserEntity extends CoreEntity {
   @Column({ name: "password", nullable: false })
   password: string;
 
-  @Column({ name: "verifiedStatus", default: false })
-  verifiedstatus: boolean;
+  @Column({ name: "verifycode", nullable: true })
+  verifyCode: Number;
+
+  @Column({ name: "verifystatus", default: false })
+  verifyStatus: Boolean;
 }

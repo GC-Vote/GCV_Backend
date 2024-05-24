@@ -15,7 +15,7 @@ export class CoreEntity {
   @CreateDateColumn({ name: "createdAt", nullable: false })
   createdAt: Date;
 
-  @UpdateDateColumn({ name: "updateAt", nullable: true })
+  @UpdateDateColumn({ name: "updatedAt", nullable: true })
   updateAt?: Date;
 
   @DeleteDateColumn({ name: "deletedAt", nullable: true })
