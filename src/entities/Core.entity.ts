@@ -12,12 +12,12 @@ export class CoreEntity {
   @PrimaryGeneratedColumn("increment", { type: "bigint" })
   id: number;
 
-  @CreateDateColumn({ name: "createAt", nullable: true })
+  @CreateDateColumn({ name: "createdAt", nullable: false })
   createdAt: Date;
 
   @UpdateDateColumn({ name: "updateAt", nullable: true })
   updateAt?: Date;
 
-  @DeleteDateColumn({ name: "deleteAt", nullable: true })
+  @DeleteDateColumn({ name: "deletedAt", nullable: true })
   deleteAt?: Date;
 }

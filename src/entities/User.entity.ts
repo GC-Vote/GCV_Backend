@@ -1,4 +1,4 @@
-import { Column, Entity, Generated } from "typeorm";
+import { Column, Entity } from "typeorm";
 
 import { CoreEntity } from "./Core.entity";
 
@@ -6,15 +6,18 @@ import { CoreEntity } from "./Core.entity";
   name: "users",
 })
 export class UserEntity extends CoreEntity {
-  @Column({ name: "name", nullable: true })
-  name: string;
+  @Column({ name: "username", nullable: true })
+  username: string;
 
-  @Column({ name: "email", nullable: true })
+  @Column({ name: "email", nullable: false })
   email: string;
 
-  @Column({ name: "avatar", nullable: true })
+  @Column({ name: "avatar", default: "logo.png" })
   avatar: string;
 
-  @Column({ name: "password", nullable: true })
+  @Column({ name: "password", nullable: false })
   password: string;
+
+  @Column({ name: "verifiedStatus", default: false })
+  verifiedstatus: boolean;
 }
