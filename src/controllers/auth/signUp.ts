@@ -1,4 +1,5 @@
-import { REASON_CODES } from "consts";
+import DOMPurify from "dompurify";
+import { JSDOM } from 'jsdom';
 import { UserEntity } from "@/entities";
 import { DuplicateError, CustomError } from "@/errors";
 import { Request, Response } from "express";
@@ -8,6 +9,7 @@ import { userService } from "services";
 import { encryptPassword, errorHandlerWrapper } from "@/utils";
 import { getUserFromEmail } from "@/services/user.service";
 import path from "path";
+import { PATHS } from "consts";
 
 export const signUpValidator = () => {
   return [
@@ -42,12 +44,17 @@ export const signUpHandler = async (
     throw new DuplicateError("This Email is already exists.");
   }
 
+  // Prevent xss using DOMPurify and santinization
+  const window = new JSDOM('').window;
+  const purify = DOMPurify(window);
+
+  // Hash password
   const hashPassword: string = await encryptPassword(password);
 
   const newUser: UserEntity = await userService.createUser({
-    name: name,
+    name: purify.sanitize(name),
     email: email,
-    avatar: avatar ? avatar : `${path.join(__dirname, '../../../','public/upload/img/default.png')}`,
+    avatar: avatar ? avatar : `${path.join(__dirname, '../../../',PATHS.FILE_UPLOAD_DEFAULT_FOLDER,'default.png')}`,
     password: hashPassword,
   });
 
