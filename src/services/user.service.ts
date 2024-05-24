@@ -1,5 +1,5 @@
 import { UserEntity } from "@/entities";
-import { getUserRepository } from "@/utils";
+import { getUserRepository } from "utils";
 
 export const createUser = async (
   data: Pick<UserEntity, "username" | "email" | "avatar" | "password" | "verifyCode">

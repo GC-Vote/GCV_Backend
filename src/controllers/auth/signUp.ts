@@ -1,5 +1,5 @@
 import DOMPurify from "dompurify";
-import { JSDOM } from 'jsdom';
+import { JSDOM } from "jsdom";
 import { UserEntity } from "@/entities";
 import { DuplicateError, CustomError } from "@/errors";
 import { Request, Response } from "express";
@@ -38,7 +38,7 @@ export const signUpHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
-  const { username, email, avatar, password } = req.body; 
+  const { username, email, avatar, password } = req.body;
 
   const user: UserEntity = await getUserFromEmail(email);
 
@@ -47,7 +47,7 @@ export const signUpHandler = async (
   }
 
   // Prevent xss using DOMPurify and santinization
-  const window = new JSDOM('').window;
+  const window = new JSDOM("").window;
   const purify = DOMPurify(window);
 
   // Hash password
@@ -59,7 +59,14 @@ export const signUpHandler = async (
   const newUser: UserEntity = await userService.createUser({
     username: purify.sanitize(username),
     email: email,
-    avatar: avatar ? avatar : `${path.join(__dirname, '../../../',PATHS.FILE_UPLOAD_DEFAULT_FOLDER,'default.png')}`,
+    avatar: avatar
+      ? avatar
+      : `${path.join(
+          __dirname,
+          "../../../",
+          PATHS.FILE_UPLOAD_DEFAULT_FOLDER,
+          "default.png"
+        )}`,
     password: hashPassword,
     verifyCode: randomVerifyNumber
   });

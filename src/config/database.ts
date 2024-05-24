@@ -14,9 +14,7 @@ export const dbOptions: DataSourceOptions = {
   database: DB_NAME,
   logging: false,
   synchronize: true,
-  entities: [
-    UserEntity
-  ],
+  entities: [UserEntity],
   extra: {
     connectionLinmit: 10,
   },
