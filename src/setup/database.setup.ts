@@ -5,7 +5,6 @@ import { DBConnect, Logger } from "@/utils";
 const databaseSetup = async (next: () => void) => {
   try {
     await DBConnect.dbCreate();
-    console.log("connection !");
     await DBConnect.getConnection();
     Logger.log(MESSAGES.DATABASE_CONNECTION_SUCCESS);
     next();

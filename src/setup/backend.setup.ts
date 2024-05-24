@@ -28,7 +28,6 @@ const backendSetup = (app: Express) => {
 
   // Health check
   app.use("/health", function (req, res) {
-    console.log(req.body);
     res.send("OK");
   });
 
