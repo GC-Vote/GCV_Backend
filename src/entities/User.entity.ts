@@ -6,8 +6,8 @@ import { CoreEntity } from "./Core.entity";
   name: "users",
 })
 export class UserEntity extends CoreEntity {
-  @Column({ name: "name", nullable: true })
-  name: string;
+  @Column({ name: "username", nullable: true })
+  username: string;
 
   @Column({ name: "email", nullable: true })
   email: string;
@@ -17,4 +17,7 @@ export class UserEntity extends CoreEntity {
 
   @Column({ name: "password", nullable: true })
   password: string;
+
+  @Column({ name: "verifiedStatus", default: false })
+  verifiedstatus: boolean;
 }
