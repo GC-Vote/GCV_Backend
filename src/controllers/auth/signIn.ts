@@ -4,7 +4,7 @@ import { body } from "express-validator";
 import httpStatus from "http-status";
 import { userService } from "@/services";
 import { comparePassword, encryptPassword, errorHandlerWrapper } from "@/utils";
-import { CustomError } from "@/errors";
+import { CustomError, DuplicateError } from "@/errors";
 import jwt from "jsonwebtoken";
 import { JWT_TOKEN, JWT_EXPIRATION_TIME } from "@/config";
 
@@ -32,6 +32,10 @@ export const signInHandler = async (
   const { email, password } = req.body;
 
   const user: UserEntity = await userService.getUserFromEmail(email);
+
+  if (!user) {
+    throw new DuplicateError("This email does not exist.");
+  }
 
   const validatePassword: Boolean = await comparePassword(
     password,
