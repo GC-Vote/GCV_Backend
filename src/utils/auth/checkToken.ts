@@ -34,7 +34,7 @@ export const checkToken = async (
             });
         }else {
             res.status(httpStatus.UNAUTHORIZED).json({
-                message: MESSAGES.UNAUTHORIZED,
+                message: MESSAGES.UNAUTHORIZED_USER,
                 reason: REASON_CODES.AUTH.UNAUTHORIZED
             });
         }
