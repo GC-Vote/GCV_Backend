@@ -1,5 +1,4 @@
 import { authController } from "@/controllers";
-import { signUpVerifyHandler, signUpVerifyValidator } from "@/controllers/auth/signUp.verify";
 import express from "express";
 
 const authRouter = express.Router();
@@ -18,8 +17,8 @@ authRouter.post(
 
 authRouter.post(
     '/signUpVerify',
-    signUpVerifyValidator(),
-    signUpVerifyHandler    
+    authController.signUpVerifyValidator(),
+    authController.signUpVerify
 )
 
 export default authRouter;

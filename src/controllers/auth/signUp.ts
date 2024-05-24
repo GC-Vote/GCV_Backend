@@ -34,7 +34,7 @@ type ReqBody = {
 };
 type ReqQuery = unknown;
 
-export const signUpHandler = async (
+const signUpHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {

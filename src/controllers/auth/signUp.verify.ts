@@ -7,6 +7,7 @@ import { getUserFromEmail } from "@/services/user.service";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import httpStatus from "http-status";
+import { errorHandlerWrapper } from "@/utils";
 
 export const signUpVerifyValidator = () => {
   return [body("verifyCode").notEmpty().withMessage("VerifyCode is required")];
@@ -23,7 +24,7 @@ type ReqBody = {
 };
 type ReqQuery = unknown;
 
-export const signUpVerifyHandler = async (
+const signUpVerifyHandler = async (
   req: Request<Params, ResBody, ReqBody, ReqQuery>,
   res: Response
 ) => {
@@ -49,3 +50,5 @@ export const signUpVerifyHandler = async (
     res.status(httpStatus.OK).json({ updateUser: updateUser, token: token });
   }
 };
+
+export const signUpVerify = errorHandlerWrapper(signUpVerifyHandler);
